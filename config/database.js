@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect('mongodb+srv://maahin810_db_user:rqBYj5ku0XilwPUz@ejp-work-roots.uptgvru.mongodb.net/work-roots?retryWrites=true&w=majority&appName=ejp-work-roots');
+    const conn = await mongoose.connect(process.env.MONGODB_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error('Database connection error:', error);
-    process.exit(1);
+    // Don't exit the process in serverless/Vercel environment, just log and throw
+    throw error;
   }
 };
 

@@ -42,6 +42,25 @@ app.get('/api/test', (req, res) => {
   res.json({ message: 'Server is working!' });
 });
 
+// Health check route
+app.get('/api/health', (req, res) => {
+  const mongoose = require('mongoose');
+  const dbState = mongoose.connection.readyState;
+  const states = {
+    0: 'disconnected',
+    1: 'connected',
+    2: 'connecting',
+    3: 'disconnecting',
+  };
+  res.json({
+    status: 'ok',
+    dbState: states[dbState] || 'unknown',
+    env: {
+      mongoUriSet: !!process.env.MONGODB_URI
+    }
+  });
+});
+
 // Error handler middleware
 app.use(errorHandler);
 

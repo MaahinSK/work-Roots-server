@@ -16,10 +16,6 @@ connectDB();
 
 const app = express();
 
-// Body parser
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
-
 // Enable CORS
 app.use(cors({
   origin: [
@@ -28,6 +24,16 @@ app.use(cors({
   ],
   credentials: true
 }));
+
+// Handle preflight requests explicitly
+app.options('*', cors());
+
+// Body parser
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
+
+// Mount routers
+app.use('/api/auth', auth);
 app.use('/api/skills', skills);
 app.use('/api/hires', hires);
 

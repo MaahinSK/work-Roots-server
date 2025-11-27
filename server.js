@@ -24,7 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://work-roots-server.vercel.app/'
+    
+    'https://work-roots-client.vercel.app/'
   ],
   credentials: true
 }));
